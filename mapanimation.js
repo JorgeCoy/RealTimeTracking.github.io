@@ -19,7 +19,7 @@ const myGarden = [
   [-74.10831298053972,4.741316236394226],
   [74.10820122845854,4.741594048593186],
 ];
-
+let despla = myGarden;
 // TODO: add your own access token
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9yZ2Vjb3kiLCJhIjoiY2w2b2RpYThkMDl1bjNsbWpqMTl5ZGNuciJ9.AcwlxkvNg3rPl9tqHtEYvw';
 const hogar = [-74.10614962356715, 4.73751320486565];
@@ -37,19 +37,15 @@ let marker = new mapboxgl.Marker().setLngLat(hogar).addTo(map);
 let counter = 0;
 function move() {
   setTimeout(() =>{
-    if(counter >=myGarden.length) return;
-    marker.setLngLat(myGarden[counter]);
+    if(counter >=despla.length) {
+      marker.setLngLat(despla[counter-1]);
+      return;
+    }
+    marker.setLngLat(despla[counter]);
     counter++;
     move();
   },1000)
   
-  setTimeout(() =>{
-    if(counter >=stops.length) return;
-    marker.setLngLat(stops[counter]);
-    counter++;
-    move();
-  },1000)
-
 
   // TODO: move the marker on the map every 1000ms. Use the function marker.setLngLat() to update the marker coordinates
   // Use counter to access bus stops in the array busStops
@@ -57,14 +53,15 @@ function move() {
 }
 
 function move1() {
-  setTimeout(() =>{
-    if(counter >=momHouse.length) return;
-    marker.setLngLat(momHouse[counter]);
-    counter++;
-    move();
-  },1000)
+  counter = 0;
+  despla = momHouse;
+  move();
 }
-
+function move2() {
+  counter = 0;
+  despla = myGarden;
+  move();
+}
 // Do not edit code past this point
 if (typeof module !== 'undefined') {
   module.exports = { move };
